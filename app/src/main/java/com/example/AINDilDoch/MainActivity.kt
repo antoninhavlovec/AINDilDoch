@@ -56,14 +56,11 @@ import kotlinx.coroutines.withContext
  *
  * adb devices
  *
- * při aktualizaci zastavit
- * adb shell am force-stop com.example.AINDilDoch
+ *
+ * adb shell dpm remove-active-admin com.example.AINDilDoch/.YourDeviceAdminReceiver
  *
  * případně
  * adb -s HVA6AP0X shell am force-stop com.example.AINDilDoch
- *
- * případně
- * adb shell dpm remove-active-admin com.example.AINDilDoch/.YourDeviceAdminReceiver
  *
  * naistalovat
  *  adb shell dpm set-device-owner com.example.AINDilDoch/.YourDeviceAdminReceiver
@@ -72,7 +69,13 @@ import kotlinx.coroutines.withContext
  *
  *   * verze 20250307
  *   * verze 20250317
- *   upraven čašovač na načítání přehledu zaměstanců - fetchEmployeeOverview
+     *   upraven čašovač na načítání přehledu zaměstanců - fetchEmployeeOverview
+     *   napojení na GIT
+         *   1.git status (zkontrolovat stav)
+         *   2.git add . (přidat soubory do staging area)
+         *   3.git commit -m "Initial commit" (vytvořit commit)
+         *   4.git branch -M main (Nastavit výchozí větev)
+         *   5.git push -u origin main (nahrát na GitHub)
 */
 
 class MainActivity : AppCompatActivity() {
@@ -205,7 +208,6 @@ class MainActivity : AppCompatActivity() {
                         val input = cisloZakazkyField.text.toString() // Z hodnoty cisloZakazkyField lze vytvořit dynamiku
                         sendPostRequest(systemInputRecordNumber!!, employeeNumber!!, input,poznamka!!)
                     }
-
                     // Vymazání pole
                     cisloZakazkyField.text.clear()
                 }
@@ -651,8 +653,10 @@ class MainActivity : AppCompatActivity() {
                             Log.d("GET_REQUEST", "Response: $jsonResponse") // Logování odpovědi
                             val dataArray = jsonResponse.optJSONArray("data") ?: JSONArray()
                             val employees = mutableListOf<Employee>()
-                            for (i in 0 until dataArray.length()) {
+/*                            for (i in 0 until dataArray.length()) {
                                 val employee = dataArray.getJSONObject(i)
+                                val startDateString = employee.optString("ino_planovani_datum_od", null)
+                                val endDateString = employee.optString("ino_planovani_datum_do", null)
                                 employees.add(
                                     Employee(
                                         (employee.optString("subjekty_nazev_subjektu", "")).toString(),
@@ -662,7 +666,23 @@ class MainActivity : AppCompatActivity() {
                                         (employee.optString("subjekty_reference_subjektu", "")).toString(),//pobočka,
                                          (employee.optString("subjekty_reference_subjektu_0001", "")).toString()//cislo zakazky
                                     )
+                            }*/
+                            for (i in 0 until dataArray.length()) {
+                                val employeeData = dataArray.getJSONObject(i)
+                                Log.d("fetchEmployeeOverview", "Raw employee data: ${employeeData.toString(2)}") // Pretty-print JSON
+                                val startDateString = employeeData.optString("ino_planovani_datum_od", null)
+                                val endDateString = employeeData.optString("ino_planovani_datum_do", null)
+                                Log.d("fetchEmployeeOverview", "startDateString: $startDateString, endDateString: $endDateString")
+                                val employee = Employee(
+                                    (employeeData.optString("subjekty_nazev_subjektu", "")).toString(),
+                                    (employeeData.optString("subjekty_nazev_subjektu_0001", "")).toString(),
+                                    ((formatDate(startDateString) ?: "")).toString(),
+                                    ((formatDate(endDateString) ?: "")).toString(),
+                                    (employeeData.optString("subjekty_reference_subjektu", "")).toString(),
+                                    (employeeData.optString("subjekty_reference_subjektu_0001", "")).toString()
                                 )
+                                employee.duration = calculateDuration(startDateString, endDateString) // Výpočet a uložení trvání
+                                employees.add(employee)
                             }
 
                             runOnUiThread {
@@ -685,6 +705,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*----------------------------------------------------------  Konec ------------------------------------------------------------*/
+
+    private fun calculateDuration(startDateString: String?, endDateString: String?): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        return try {
+            if (startDateString == null) {
+                return ""
+            }
+
+            val startDate = tryParseDate(startDateString, dateFormat) ?: return "" // Použijeme pomocnou funkci
+            val endDate = endDateString?.let { tryParseDate(it, dateFormat) } ?: Date()
+
+            val durationMillis = endDate.time - startDate.time
+            val hours = durationMillis / (1000 * 60 * 60)
+            val minutes = (durationMillis % (1000 * 60 * 60)) / (1000 * 60)
+            val durationString = String.format("%02d:%02d", hours, minutes)
+            Log.d("calculateDuration", "Duration for $startDateString - $endDateString: $durationString")
+            durationString
+        } catch (e: Exception) {
+            Log.e("calculateDuration", "Chyba při výpočtu trvání: ${e.message}", e)
+            ""
+        }
+    }
+
+    // Pomocná funkce pro bezpečné parsování data
+    private fun tryParseDate(dateString: String, dateFormat: SimpleDateFormat): Date? {
+        return try {
+            dateFormat.parse(dateString)
+        } catch (e: Exception) {
+            Log.w("tryParseDate", "Invalid date format: $dateString")
+            null
+        }
+    }
 
     private fun formatDate(input: String?): String? {
         if (input == null) return null

@@ -1,10 +1,12 @@
 package com.example.AINDilDoch
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
 import androidx.recyclerview.widget.RecyclerView
 import com.example.AINDilDoch.R
 
@@ -16,14 +18,28 @@ class EmployeeAdapter(private val employees: List<Employee>) :
         return EmployeeViewHolder(view)
     }
 
+    class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById(R.id.employeeName)
+        val department: TextView = itemView.findViewById(R.id.employeeDepartment)
+        val startDate: TextView = itemView.findViewById(R.id.employeeStartDate)
+        val endDate: TextView = itemView.findViewById(R.id.employeeEndDate)
+        val reference: TextView = itemView.findViewById(R.id.employeeReference)
+        val cisloZakazky: TextView = itemView.findViewById(R.id.employeeCisloZak)
+        val duration: TextView = itemView.findViewById(R.id.employeeDuration)
+    }
+
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
         val employee = employees[position]
+        Log.d("EmployeeAdapter", "Employee data: $employee")
+        val durationText = employees[position].duration
         holder.name.text = employee.name
         holder.department.text = employee.department
         holder.startDate.text = employee.startDate
         holder.endDate.text = employee.endDate
         holder.reference.text = employee.reference
         holder.cisloZakazky.text = employee.cisloZakazky
+        Log.d("EmployeeAdapter", "Duration for ${employees[position].name}: $durationText")
+        holder.duration.text = durationText
 
         // Dynamické obarvování podle hodnoty pole "department"
         val department = employee.department
@@ -37,22 +53,6 @@ class EmployeeAdapter(private val employees: List<Employee>) :
             else -> Color.TRANSPARENT // Výchozí barva
         }
         holder.itemView.setBackgroundColor(backgroundColor)
-
-        // Podmínky pro změnu barvy textu
-//        if (endDate.isNotBlank() && endDate != "N/A" && cislozakazky.equals("0000006", ignoreCase = true)) {
-//            holder.name.setTextColor(Color.parseColor("#4A148C"))
-////            holder.name.setTextColor(Color.RED)//červená
-//            //holder.department.setTextColor(Color.RED)
-////            holder.startDate.setTextColor(Color.RED)
-////            holder.endDate.setTextColor(Color.RED)
-////            holder.cisloZakazky.setTextColor(Color.RED)
-//        } else {
-//            // Výchozí barva textu
-//            holder.name.setTextColor(Color.parseColor("#009900"))//zelená
-//            //holder.department.setTextColor(Color.GREEN)
-//           // holder.startDate.setTextColor(Color.GREEN)
-//            //holder.endDate.setTextColor(Color.GREEN)
-//        }
 
         if /*prestavka*/(cislozakazky.equals("0000006", ignoreCase = true)) {
             holder.name.setTextColor(Color.parseColor("#4A148C"))
@@ -113,12 +113,5 @@ class EmployeeAdapter(private val employees: List<Employee>) :
 
     override fun getItemCount(): Int = employees.size
 
-    class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.employeeName)
-        val department: TextView = itemView.findViewById(R.id.employeeDepartment)
-        val startDate: TextView = itemView.findViewById(R.id.employeeStartDate)
-        val endDate: TextView = itemView.findViewById(R.id.employeeEndDate)
-        val reference: TextView = itemView.findViewById(R.id.employeeReference)
-        val cisloZakazky: TextView = itemView.findViewById(R.id.employeeCisloZak)
-    }
+
 }
