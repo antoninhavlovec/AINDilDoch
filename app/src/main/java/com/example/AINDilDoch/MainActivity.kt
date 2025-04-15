@@ -76,6 +76,8 @@ import kotlinx.coroutines.withContext
          *   3.git commit -m "Initial commit" (vytvořit commit)
          *   4.git branch -M main (Nastavit výchozí větev)
          *   5.git push -u origin main (nahrát na GitHub)
+ *   * verze 20250415
+ *   * přidán zobrazení času o délce zakázky v přehledu zakázek
 */
 
 class MainActivity : AppCompatActivity() {
