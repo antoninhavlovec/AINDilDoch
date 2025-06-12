@@ -5,6 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:errorEnabled="true">
 
     <ImageView
@@ -90,7 +91,7 @@
         android:requiresFadingEdge="horizontal"
         android:text="Příchod/Odchod"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="34sp"
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/btn_lekar"
@@ -256,7 +257,7 @@
         android:paddingRight="50dp"
         android:text="Vedlejší práce/úklid"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -326,7 +327,7 @@
         android:outlineSpotShadowColor="#00BFA5"
         android:text="Oběd"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/btn_lekar"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -344,7 +345,7 @@
         android:outlineSpotShadowColor="#D50000"
         android:text="Lékař"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textIsSelectable="false"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -364,7 +365,7 @@
         android:paddingLeft="6dp"
         android:text="Školení"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btn_prestavka"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -382,7 +383,7 @@
         android:outlineSpotShadowColor="#4A148C"
         android:text="Pauza"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/vedlejsiPraceButton"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -470,6 +471,4 @@
         app:layout_constraintEnd_toEndOf="@+id/vedlejsiPraceButton"
         app:layout_constraintTop_toTopOf="@+id/vedlejsiPraceButton"
         app:srcCompat="@drawable/cleaning_staff" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

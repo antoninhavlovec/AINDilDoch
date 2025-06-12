@@ -56,7 +56,6 @@ import kotlinx.coroutines.withContext
  *
  * adb devices
  *
- *
  * adb shell dpm remove-active-admin com.example.AINDilDoch/.YourDeviceAdminReceiver
  *
  * případně

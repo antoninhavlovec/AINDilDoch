@@ -22,8 +22,8 @@
         <activity
             android:name="com.example.AINDilDoch.MainActivity"
             android:exported="true"
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" >
+            android:excludeFromRecents="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
