@@ -52,7 +52,7 @@
         android:id="@+id/textView13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ver.20250415"
+        android:text="ver. 20250612"
         android:textAlignment="textEnd" />
 
 </LinearLayout>

@@ -32,16 +32,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.MaterialComponents.Button"
         android:id="@+id/submitButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="122dp"
         android:layout_height="43dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="10dp"
         android:text="Odeslat"
         android:textColor="?attr/colorOnSurface"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_settings"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -471,4 +471,30 @@
         app:layout_constraintEnd_toEndOf="@+id/vedlejsiPraceButton"
         app:layout_constraintTop_toTopOf="@+id/vedlejsiPraceButton"
         app:srcCompat="@drawable/cleaning_staff" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/settingsButtonPict"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Nastavení"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_settings"
+        app:layout_constraintEnd_toEndOf="@+id/btn_settings"
+        app:layout_constraintStart_toStartOf="@+id/btn_settings"
+        app:layout_constraintTop_toTopOf="@+id/btn_settings"
+        app:srcCompat="@drawable/gear" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_settings"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="53dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

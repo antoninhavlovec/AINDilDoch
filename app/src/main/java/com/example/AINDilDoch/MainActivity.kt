@@ -72,11 +72,13 @@ import kotlinx.coroutines.withContext
      *   napojení na GIT
          *   1.git status (zkontrolovat stav)
          *   2.git add . (přidat soubory do staging area)
-         *   3.git commit -m "Initial commit" (vytvořit commit)
+         *   3.git commit -m "20250612" (vytvořit commit)
          *   4.git branch -M main (Nastavit výchozí větev)
          *   5.git push -u origin main (nahrát na GitHub)
  *   * verze 20250415
  *   * přidán zobrazení času o délce zakázky v přehledu zakázek
+ *   * verze 20250612
+ *   upraven vzhled respektujicí světlé nebo tmavé téma v androidu
 */
 
 class MainActivity : AppCompatActivity() {
@@ -91,6 +93,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var lekarButton: Button
     private lateinit var skoleniButton: Button
     private lateinit var prestavButton: Button
+    private lateinit var settingsButton: Button
     private lateinit var typ_doch: TextView
 
     private var progressDialog: ProgressDialog? = null
@@ -144,6 +147,7 @@ class MainActivity : AppCompatActivity() {
         lekarButton = findViewById(R.id.btn_lekar)
         skoleniButton = findViewById(R.id.btn_skoleni)
         prestavButton = findViewById(R.id.btn_prestavka)
+        settingsButton = findViewById(R.id.btn_settings)
         typ_doch = findViewById(R.id.textView10)
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -304,6 +308,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Chybí potřebné údaje!", Toast.LENGTH_SHORT).show()
             }
         }
+        // Logika tlačítka "Nastaveni"
+        settingsButton.setOnClickListener {
+            val intent=Intent(this,NastaveniActivity::class.java)
+            startActivity(intent)
+        }
+
         // Nastavení listeneru pro dotyk na celou obrazovku
         val rootLayout = findViewById<ConstraintLayout>(R.id.linearLayout)
 
